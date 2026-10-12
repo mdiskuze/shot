@@ -19,7 +19,7 @@ You need Debian, Ubuntu or Linux Mint with GNOME Shell 45 to 50 or Cinnamon 6, `
 2. Open a terminal in the folder with the download (a double click only opens the file in an editor) and run `sh shot-<version>-linux.sh`. If programs Shot uses are missing (`ffmpeg`, `tesseract-ocr` with Czech, `zenity`, on Cinnamon also `gjs`, GTK 4, libadwaita and `xdotool`), the installer installs them with `sudo apt` and `sudo` asks for your password once. Shot works without them, only the feature that needs one says what is missing.
 3. GNOME: the first install needs one log out and log in, because GNOME Shell finds a new extension only at login. An update after that needs nothing, Shot loads the new version by itself. Cinnamon: Shot is on at once, after an update restart Cinnamon (Ctrl+Alt+Esc, the windows stay).
 
-Print then opens Shot. If you have Shot 1.8 or older, the installer moves it to its new name (`shot@mdiskuze.github.io`) and keeps your settings, on GNOME that needs one log out and log in because GNOME finds the renamed extension only at login. Later updates come from Settings > About inside Shot, which verifies the signature before it installs.
+Print then opens Shot. If you have an older Shot, the installer moves it to its new name (`shot@mdiskuze.github.io`) and keeps your settings. A running Shot on GNOME loads the new version at once, on Cinnamon restart Cinnamon. Later updates come from Settings > About inside Shot, which verifies the signature before it installs.
 
 ## What the installer changes
 
