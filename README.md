@@ -13,10 +13,10 @@ The installer uses `apt`, so it is meant for Debian, Ubuntu and Linux Mint. In t
 
 ## Install
 
-You need Debian, Ubuntu or Linux Mint with GNOME Shell 45 to 50 or Cinnamon 6, `python3` and `ssh-keygen` (the OpenSSH client).
+You need Debian, Ubuntu or Linux Mint with GNOME Shell 45 to 50 or Cinnamon 6, `python3` (3.8 or newer, the installer says so at once when it is missing) and `ssh-keygen` (the OpenSSH client).
 
-1. Download `shot-<version>-linux.pyz` (the installer) and `shot-<version>-linux.pyz.sig` (its signature) from the files below.
-2. Open a terminal in the folder with the download and run `python3 shot-<version>-linux.pyz`. If programs Shot uses are missing (`ffmpeg`, `tesseract-ocr` with Czech, `zenity`, on Cinnamon also `gjs`, GTK 4, libadwaita and `xdotool`), the installer installs them with `sudo apt` and `sudo` asks for your password once. Shot works without them, only the feature that needs one says what is missing.
+1. Download `shot-<version>-linux.sh` (the installer) and `shot-<version>-linux.sh.sig` (its signature) from the files below.
+2. Open a terminal in the folder with the download (a double click only opens the file in an editor) and run `sh shot-<version>-linux.sh`. If programs Shot uses are missing (`ffmpeg`, `tesseract-ocr` with Czech, `zenity`, on Cinnamon also `gjs`, GTK 4, libadwaita and `xdotool`), the installer installs them with `sudo apt` and `sudo` asks for your password once. Shot works without them, only the feature that needs one says what is missing.
 3. GNOME: the first install needs one log out and log in, because GNOME Shell finds a new extension only at login. An update after that needs nothing, Shot loads the new version by itself. Cinnamon: Shot is on at once, after an update restart Cinnamon (Ctrl+Alt+Esc, the windows stay).
 
 Print then opens Shot. Later updates come from Settings > About inside Shot, which verifies the signature before it installs.
@@ -27,15 +27,15 @@ Print then opens Shot. Later updates come from Settings > About inside Shot, whi
 - It takes the keys for screenshots (Print and the others Shot uses) from the desktop. Your own shortcuts stay, only without the key.
 - It copies Shot to `~/.local/share/gnome-shell/extensions/shot@mira.local` (Cinnamon: `~/.local/share/cinnamon/extensions/...` and the applet), `shot-cli` to `~/.local/bin` and `shot.desktop` to `~/.local/share/applications`.
 - Everything it changes it backs up first, to `~/.local/share/shot/install`.
-- Every run writes a report (what it found, changed, installed and backed up, the steps and any error, without your user name or host name) to `~/.local/share/shot/install-reports`. `python3 shot-<version>-linux.pyz report` prints the last one. Attach it to an issue when something goes wrong.
+- Every run writes a report (what it found, changed, installed and backed up, the steps and any error, without your user name or host name) to `~/.local/share/shot/install-reports`. `sh shot-<version>-linux.sh report` prints the last one. Attach it to an issue when something goes wrong.
 
 ## Uninstall
 
-Run `python3 shot-<version>-linux.pyz restore`. It puts back every setting, file and launcher from the backup, removes Shot and the packages the installer added, starts the tool it stopped, and then checks each change against the backup. The report of the restore says whether the system is as it was before the install, and lists any difference. `--purge` also removes Shot's own settings, cache and history. Screenshots you saved are never touched.
+Run `sh shot-<version>-linux.sh restore`. It puts back every setting, file and launcher from the backup, removes Shot and the packages the installer added, starts the tool it stopped, and then checks each change against the backup. The report of the restore says whether the system is as it was before the install, and lists any difference. `--purge` also removes Shot's own settings, cache and history. Screenshots you saved are never touched.
 
 ## Files
 
-- `shot-<version>-linux.pyz` is the installer (a Python zip application for Debian, Ubuntu and Linux Mint), `shot-<version>-linux.pyz.sig` its signature. The signature is made with `ssh-keygen -Y sign`, the public key is `release-key.pub` in the extension folder of an installed Shot. To check it by hand: `ssh-keygen -Y verify -f release-key.pub -I shot-release -n shot-release -s shot-<version>-linux.pyz.sig < shot-<version>-linux.pyz`.
+- `shot-<version>-linux.sh` is the installer (a shell script with a Python zip application inside, for Debian, Ubuntu and Linux Mint), `shot-<version>-linux.sh.sig` its signature. The signature is made with `ssh-keygen -Y sign`, the public key is `release-key.pub` in the extension folder of an installed Shot. To check it by hand: `ssh-keygen -Y verify -f release-key.pub -I shot-release -n shot-release -s shot-<version>-linux.sh.sig < shot-<version>-linux.sh`.
 
 ## Updates
 
@@ -43,4 +43,4 @@ Releases are signed. Shot checks for a newer release once a day in the backgroun
 
 ## Reporting a problem
 
-Open an issue here. Please include the Shot version, the desktop (GNOME Shell or Cinnamon and its version), the steps that lead to the problem and, for an installation problem, the report of the installer (`python3 shot-<version>-linux.pyz report`).
+Open an issue here. Please include the Shot version, the desktop (GNOME Shell or Cinnamon and its version), the steps that lead to the problem and, for an installation problem, the report of the installer (`sh shot-<version>-linux.sh report`).
