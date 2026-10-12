@@ -19,13 +19,13 @@ You need Debian, Ubuntu or Linux Mint with GNOME Shell 45 to 50 or Cinnamon 6, `
 2. Open a terminal in the folder with the download (a double click only opens the file in an editor) and run `sh shot-<version>-linux.sh`. If programs Shot uses are missing (`ffmpeg`, `tesseract-ocr` with Czech, `zenity`, on Cinnamon also `gjs`, GTK 4, libadwaita and `xdotool`), the installer installs them with `sudo apt` and `sudo` asks for your password once. Shot works without them, only the feature that needs one says what is missing.
 3. GNOME: the first install needs one log out and log in, because GNOME Shell finds a new extension only at login. An update after that needs nothing, Shot loads the new version by itself. Cinnamon: Shot is on at once, after an update restart Cinnamon (Ctrl+Alt+Esc, the windows stay).
 
-Print then opens Shot. Later updates come from Settings > About inside Shot, which verifies the signature before it installs.
+Print then opens Shot. If you have Shot 1.8 or older, the installer moves it to its new name (`shot@mdiskuze.github.io`) and keeps your settings, on GNOME that needs one log out and log in because GNOME finds the renamed extension only at login. Later updates come from Settings > About inside Shot, which verifies the signature before it installs.
 
 ## What the installer changes
 
 - It stops the screenshot tool you use now (Flameshot, ksnip, Shutter, Spectacle, xfce4-screenshooter) and switches off its autostart, its keys and its panel launcher. Nothing of it is removed.
 - It takes the keys for screenshots (Print and the others Shot uses) from the desktop. Your own shortcuts stay, only without the key.
-- It copies Shot to `~/.local/share/gnome-shell/extensions/shot@mira.local` (Cinnamon: `~/.local/share/cinnamon/extensions/...` and the applet), `shot-cli` to `~/.local/bin` and `shot.desktop` to `~/.local/share/applications`.
+- It copies Shot to `~/.local/share/gnome-shell/extensions/shot@mdiskuze.github.io` (Cinnamon: `~/.local/share/cinnamon/extensions/...` and the applet), `shot-cli` to `~/.local/bin` and `shot.desktop` to `~/.local/share/applications`.
 - Everything it changes it backs up first, to `~/.local/share/shot/install`.
 - Every run writes a report (what it found, changed, installed and backed up, the steps and any error, without your user name or host name) to `~/.local/share/shot/install-reports`. `sh shot-<version>-linux.sh report` prints the last one. Attach it to an issue when something goes wrong.
 
