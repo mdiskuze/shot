@@ -2,6 +2,8 @@
 
 A screenshot and annotation tool for GNOME Shell (Wayland) and Cinnamon (X11). Shot freezes all monitors at once, lets you pick a region, a window or a monitor, draw on the frozen screen, and then copy, save, pin, upload or OCR the result. It also records a region to GIF or WebP, records a procedure click by click (with the option to cover personal data), captures content taller than the screen or wider by scrolling it, and has a guided tour of all of it.
 
+A tour of every function and setting, with screenshots: [English](https://mdiskuze.github.io/shot/tour/) and [Czech](https://mdiskuze.github.io/shot/tour/cs/).
+
 This repository holds the signed release files and the issue tracker. The source code is not published here.
 
 ## Supported desktops
