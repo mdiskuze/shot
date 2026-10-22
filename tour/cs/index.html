@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shot - snímky obrazovky a poznámky pro GNOME a Cinnamon</title>
+<meta name="description" content="Snímek oblasti, okna nebo všech monitorů, kreslení do něj, zakrytí osobních údajů, skrolování dlouhých stránek a záznam kroků. Prohlídka všech funkcí a nastavení Shotu.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="cs_CZ">
+<link rel="canonical" href="https://mdiskuze.github.io/shot/tour/cs/">
+<link rel="alternate" hreflang="en" href="https://mdiskuze.github.io/shot/tour/">
+<link rel="alternate" hreflang="cs" href="https://mdiskuze.github.io/shot/tour/cs/">
+<link rel="alternate" hreflang="x-default" href="https://mdiskuze.github.io/shot/tour/">
+<meta property="og:title" content="Shot - snímky obrazovky a poznámky pro GNOME a Cinnamon">
+<meta property="og:description" content="Nástroj na snímky obrazovky pro GNOME a Cinnamon s editorem kreseb, skrolovacím snímkem, záznamem kroků a nahráváním obrazovky.">
+<meta property="og:image" content="https://mdiskuze.github.io/shot/tour/img/banner.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{
+  --ground:#f7f8fa; --surface:#eef0f4; --surface-2:#e3e6ec; --ink:#16181d; --ink-2:#4f5663; --line:#d8dce4;
+  --accent:#b3261e; --accent-ink:#ffffff; --tint:#fbe3e0;
+  --shadow:0 1px 2px rgba(20,24,40,.08),0 14px 34px -14px rgba(20,24,40,.35);
+  --radius:22px; --max:1160px;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#14161a; --surface:#1c1f25; --surface-2:#262a32; --ink:#eceef2; --ink-2:#aeb4c0; --line:#343944;
+    --accent:#ff8a80; --accent-ink:#2a0805; --tint:#3a1f1d; --shadow:0 14px 34px -14px rgba(0,0,0,.75);
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--ground);color:var(--ink);font:400 17px/1.6 var(--font);-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--accent)}
+h1,h2,h3{line-height:1.12;letter-spacing:-.02em;margin:0}
+p{margin:0}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:8px}
+kbd,code{font:600 .88em var(--mono);background:var(--surface-2);padding:1px 7px;border-radius:7px;color:var(--ink);white-space:nowrap}
+kbd{border:1px solid var(--line);border-bottom-width:2px}
+
+/* header */
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--ground) 88%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:16px;min-height:64px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+.brand{font-weight:700;font-size:20px;letter-spacing:-.02em;display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none}
+.brand i{width:26px;height:26px;border:3px solid var(--accent);border-radius:5px;display:block;position:relative}
+.brand i::after{content:"";position:absolute;right:-7px;bottom:-7px;width:10px;height:10px;background:var(--accent);border-radius:2px}
+.langs{margin-left:auto;display:flex;gap:2px}
+.langs a{font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--ink-2);text-decoration:none;padding:10px 9px;min-height:44px;display:inline-flex;align-items:center;border-radius:10px}
+.langs a[aria-current="true"]{color:var(--ink);background:var(--surface-2)}
+.langs a:hover{background:var(--surface)}
+.chapters{border-top:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.chapters::-webkit-scrollbar{display:none}
+.chapters .wrap{display:flex;flex-wrap:nowrap;gap:4px;padding-top:6px;padding-bottom:6px}
+.chapters a{white-space:nowrap;text-decoration:none;color:var(--ink-2);font-size:14px;font-weight:600;padding:9px 12px;border-radius:999px;min-height:40px;display:inline-flex;align-items:center}
+.chapters a:hover{background:var(--surface)}
+.chapters a.on{background:var(--tint);color:var(--ink)}
+
+/* hero */
+.hero{padding:56px 0 44px;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:.95fr 1.05fr;gap:44px;align-items:center}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-size:clamp(38px,5.4vw,62px);margin:14px 0 18px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.lead{font-size:clamp(18px,2vw,21px);color:var(--ink-2);max-width:34em}
+.pledges{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;padding:0;list-style:none}
+.pledges li{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-size:15px;font-weight:600}
+
+/* a screenshot of the desktop in a plain frame */
+.shotfig{margin:0;border-radius:16px;background:#101216;padding:6px;box-shadow:var(--shadow)}
+.shotfig img{border-radius:11px;width:100%;height:auto;background:#101216}
+.shotfig.tall img{max-height:620px;width:auto;margin:0 auto}
+.shotfig figcaption{font-size:14px;color:#c7ccd6;padding:10px 8px 4px;text-align:center}
+.stack{display:grid;gap:18px;width:100%}
+
+/* chapters */
+.chap{padding:72px 0;border-top:1px solid var(--line)}
+.chap .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:52px;align-items:center}
+.chap.flip .art{order:-1}
+.num{font-size:14px;font-weight:800;color:var(--accent);letter-spacing:.1em}
+.chap h2{font-size:clamp(30px,4vw,44px);margin:10px 0 16px}
+.chap .lead{font-size:19px}
+.can{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:12px}
+.can li{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start}
+.can li::before{content:"";width:22px;height:22px;margin-top:3px;border-radius:50%;background:var(--tint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='%23b3261e' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
+.can b{font-weight:650}
+.art{display:flex;justify-content:center;position:relative}
+.band{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.centerhead{text-align:center;max-width:44em;margin:0 auto 34px}
+.centerhead h2{font-size:clamp(30px,4vw,44px);margin:10px 0 16px}
+.chap.full .wrap{display:block}
+
+/* the closer look: rows of text and a picture */
+.crow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:52px;align-items:center;padding:48px 0;border-top:1px solid var(--line)}
+.crow:first-of-type{border-top:0}
+.crow.flip .art{order:-1}
+.crow h3{font-size:clamp(26px,3.2vw,36px);margin-bottom:14px;letter-spacing:-.02em}
+.crow .lead{font-size:18px}
+
+/* tool grid */
+.tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:8px}
+.tool{background:var(--ground);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.tool b{display:flex;align-items:center;gap:8px;font-size:16px}
+.tool span{display:block;color:var(--ink-2);font-size:14.5px;line-height:1.45;margin-top:4px}
+
+/* highlights */
+.hl-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.hl{display:flex;flex-direction:column;gap:8px;background:var(--ground);border:1px solid var(--line);border-radius:var(--radius);padding:22px;color:inherit;text-decoration:none;transition:border-color .2s,transform .2s}
+.hl:hover{border-color:var(--accent);transform:translateY(-2px)}
+.hl h3{font-size:19px;line-height:1.2}
+.hl h3::after{content:" \2192";color:var(--accent)}
+.hl p{color:var(--ink-2);font-size:15.5px;line-height:1.5}
+
+/* settings */
+.sgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.sgroup{background:var(--ground);border:1px solid var(--line);border-radius:var(--radius);padding:26px}
+.sgroup h3{font-size:21px;margin-bottom:6px}
+.sgroup>p{color:var(--ink-2);font-size:15.5px}
+.opts{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:12px}
+.opts li{display:grid;gap:2px;padding-top:12px;border-top:1px solid var(--line)}
+.opts li:first-child{border-top:0;padding-top:0}
+.opts b{font-weight:650}
+.opts span{color:var(--ink-2);font-size:15.5px;line-height:1.5}
+
+/* keys */
+.keytable{width:100%;border-collapse:collapse;font-size:15.5px}
+.keytable th,.keytable td{text-align:left;padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+.keytable th{font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);border-top:0}
+.keytable td:first-child{white-space:nowrap;width:1%}
+.keywrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:10px 14px;overflow-x:auto}
+
+/* install */
+.steps{counter-reset:s;list-style:none;margin:20px 0 0;padding:0;display:grid;gap:12px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}
+.steps li::before{content:counter(s);width:30px;height:30px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:800;display:grid;place-items:center;font-size:15px}
+.cmd{display:block;margin-top:6px;font:600 14.5px var(--mono);background:#101216;color:#e8eaf0;padding:12px 14px;border-radius:12px;overflow-x:auto;white-space:pre}
+
+footer{padding:56px 0 80px;border-top:1px solid var(--line);color:var(--ink-2);font-size:15px}
+footer .wrap{display:grid;gap:10px}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+html:not(.js) .rv{opacity:1;transform:none}
+
+@media(max-width:900px){
+  .hero .wrap,.chap .wrap{grid-template-columns:1fr;gap:34px}
+  .chap.flip .art,.crow.flip .art{order:0}
+  .crow{grid-template-columns:1fr;gap:30px}
+  .sgrid{grid-template-columns:1fr}
+  .hl-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .chap{padding:56px 0}
+}
+@media(max-width:560px){.hl-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body><header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><i></i>Shot</a>
+    <nav class="langs" aria-label="Language">
+      <a href="../" hreflang="en" lang="en">EN</a><a href="./" hreflang="cs" lang="cs" aria-current="true">CS</a>
+    </nav>
+  </div>
+  <nav class="chapters" aria-label="Kapitoly">
+    <div class="wrap">
+      <a href="#closer">Zblízka</a><a href="#highlights">Přehled</a><a href="#capture">Výběr</a><a href="#draw">Kreslení</a><a href="#effects">Efekty</a><a href="#deliver">Výstup</a><a href="#record">Nahrávání</a><a href="#monitors">Monitory</a><a href="#settings">Nastavení</a><a href="#keys">Klávesy</a><a href="#install">Instalace</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Snímky obrazovky pro GNOME a Cinnamon</p>
+      <h1>Nasnímej, <em>popiš</em> a zkopíruj</h1>
+      <p class="lead">Shot zastaví obraz na všech monitorech najednou. Vybereš oblast, okno nebo monitor, nakreslíš do zastaveného obrazu a výsledek zkopíruješ, uložíš, připneš, nahraješ nebo z něj přečteš text. Všechno, co snímek do dokumentace potřebuje, je v jednom překryvu.</p>
+      <ul class="pledges">
+        <li>Bez účtu</li><li>Žádný cizí kód</li><li>Nahrává jen když stiskneš Nahrát</li>
+      </ul>
+      <p class="lead" style="margin-top:26px;font-size:16px">Běží na GNOME 45 až 50 (Wayland i X11) a na Linux Mintu s Cinnamonem 6 (X11). Screenshoty na téhle stránce jsou pořízené Shotem samotným.</p>
+    </div>
+    <div><figure class="shotfig"><img src="../img/cs/hero.webp" alt="Překryv Shotu: na zastaveném obrazu vybraná oblast a kolem ní lišty" loading="lazy"></figure></div>
+  </div>
+</section>
+
+<!-- CLOSER LOOK -->
+<section class="chap band full" id="closer">
+  <div class="wrap">
+    <div class="centerhead rv">
+      <p class="eyebrow">Zblízka</p>
+      <h2>Čtyři věci, které stojí za bližší pohled</h2>
+      <p class="lead">Většina Shotu je to, co čekáš od nástroje na snímky obrazovky. Tyhle čtyři části jsou udělané pro snímky do dokumentace, pro dlouhý obsah a pro postupy, a jsou tu popsané podrobně.</p>
+    </div>
+
+    <div class="crow" id="scroll">
+      <div class="rv">
+        <h3>Skrolovací snímek a Stop pro obsah, který nekončí</h3>
+        <p class="lead">Vyber oblast přes dlouhou stránku, chat, seznam nebo tabulku a stiskni Skrolovat. Shot obsah pod oblastí posouvá sám, po každém kroku nasnímá obrázek a spojí je do jednoho vysokého. Funguje v aplikacích, které se posouvají kolečkem myši.</p>
+        <ul class="can">
+        <li><div><b>Stop kdykoli.</b> Těsně pod oblastí je po celou dobu červené tlačítko Stop. Stiskneš ho a Shot běh ukončí a dá ti, co je zatím spojené. Je to cesta, jak ukončit tabulku nebo seznam bez konce, kde by čekání skončilo až na nejvyšší výšce.</div></li>
+        <li><div><b>Odsud nebo od začátku.</b> Shot se zeptá a u druhé odpovědi obsah nejdřív vrátí na začátek. Nastavení Kde skrolovací snímek začíná si odpověď zapamatuje.</div></li>
+        <li><div><b>Čeká, až obraz stojí.</b> Po každém kroku Shot porovná dva obrázky těsně po sobě a vezme ten, který se už nehýbe, takže se stránka, která se plynule posouvá nebo během toho dočítá obsah, nečte uprostřed pohybu.</div></li>
+        <li><div><b>Spojuje podle toho, co je na obrázcích.</b> Krok je asi polovina oblasti, takže se obrázky překrývají, a posun najde porovnáním řádků. Pevná hlavička nebo patička se vezme jednou, posuvník ani zvýraznění položky pod ukazatelem ho nesplete a když se dva obrázky nespojí, vrátí se a vezme menší krok.</div></li>
+        <li><div><b>Skončí sám,</b> když se obsah třikrát po sobě nepohne, nebo na nejvyšším obrázku z nastavení (zprvu 30000 pixelů).</div></li>
+        <li><div><b>Nepřepínej do jiného okna,</b> dokud neskončí. Kolečko jde do okna pod ukazatelem a další kroky by posouvaly něco jiného.</div></li>
+        <li><div><b>Kde kolečko nic nedělá,</b> to Shot po dvou krocích pozná, požádá tě, abys posouval sám, a obrázky bere průběžně. Ukončí to klávesa Shotu.</div></li>
+        <li><div><b>Do strany a výsledek je normální obrázek.</b> Tlačítko Vedle dělá totéž pro širokou tabulku nebo časovou osu. Výsledek se otevře jako vysoký nebo široký obrázek, který jde posouvat, kreslit do něj a kopírovat jako každý jiný.</div></li>
+        </ul>
+      </div>
+      <div class="art rv"><div class="stack"><figure class="shotfig tall"><img src="../img/cs/scroll.webp" alt="Vysoký obrázek z dlouhého seznamu otevřený v překryvu" loading="lazy"></figure></div></div>
+    </div>
+
+    <div class="crow flip" id="redact">
+      <div class="rv">
+        <h3>Osobní údaje najde a zakryje Shot</h3>
+        <p class="lead">Ctrl+Shift+R přečte obrázek a na každý e-mail, telefon, číslo účtu, IBAN a číslo karty, který najde, položí pixelaci. Výsledek zkontroluješ a obrázek pošleš dál.</p>
+        <ul class="can">
+        <li><div><b>Jak je hledá.</b> Shot pustí rozpoznávání textu programu tesseract čtyřikrát vedle sebe, na obrázku v původní velikosti, dvakrát zvětšeném, třikrát zvětšeném a třikrát zvětšeném a mírně rozmazaném, a sloučí, co čtyři průchody našly. Jazyky se nastavují v nastavení, třeba eng+ces.</div></li>
+        <li><div><b>Obyčejné kresby.</b> Každý nález je pixelace nakreslená jako kterákoli jiná, takže ji jde posunout, odebrat nebo přidat další na to, co Shot přehlédl. Ctrl+Z je vrátí všechny najednou.</div></li>
+        <li><div><b>Co najde.</b> Na sadě 120 vymyšlených obrazovek našel 91 % takových údajů a nepoložil rámeček na špatné místo. Jména ani adresy nehledá, takže se na obrázek před odesláním podívej.</div></li>
+        <li><div><b>Pixelace, rozmazání, inverze.</b> Klávesy B, U a I zakryjí oblast, přes kterou táhneš. Jsou to kresby jako ostatní, takže jdou posunout, změnit i vrátit.</div></li>
+        <li><div><b>Laso.</b> Klávesa J ořízne obrázek na volný tvar. Mimo něj je průhledno (JPG dostane bílé pozadí) a víc las se sečte.</div></li>
+        <li><div><b>I v záznamu kroků.</b> Volba Zakrývat osobní údaje pustí stejné hledání na každý krok, nalezené pixeluje a z titulku vypustí. Krok, který se zkontrolovat nepodařilo, se neuloží.</div></li>
+        </ul>
+      </div>
+      <div class="art rv"><div class="stack"><figure class="shotfig"><img src="../img/cs/hide.webp" alt="Tabulka s e-mailem, telefonem, číslem účtu a číslem karty zakrytými pixelací" loading="lazy"></figure></div></div>
+    </div>
+
+    <div class="crow" id="steps">
+      <div class="rv">
+        <h3>Dokument z kroků vytvořený tvými kliky</h3>
+        <p class="lead">Ctrl+Shift+Print spustí záznam kroků a ty postup uděláš jako obvykle. Každý klik myší je jeden číslovaný obrázek a když záznam zastavíš, jsou z těch obrázků dokument.</p>
+        <ul class="can">
+        <li><div><b>Jeden klik, jeden krok.</b> V okamžiku stisku Shot nasnímá monitor pod ukazatelem, nebo okno pod ním, a na místo kliknutí nakreslí červený kruh s číslem kroku. Klik na ikonu nebo menu Shotu a klik v otevřeném překryvu krok není.</div></li>
+        <li><div><b>Kroky bez kliknutí.</b> Shift+Alt+Print přidá krok ručně, pro něco, co se dělá klávesnicí.</div></li>
+        <li><div><b>Výsledek.</b> Stejná zkratka záznam ukončí. Ve složce <code>kroky-&lt;datum&gt;</code> v ukládací složce je <code>01.png</code>, <code>02.png</code> a další, <code>kroky.md</code> a jeden <code>kroky.html</code> s obrázky uvnitř, takže se dá poslat jako jeden soubor.</div></li>
+        <li><div><b>Titulky, které jde přepsat.</b> Každý krok má titulek jako „Klik v Firefoxu - Nastavení“, převzatý z aplikace a titulku okna, a jde změnit.</div></li>
+        <li><div><b>Ze skriptu.</b> <code>shot-cli steps start</code>, <code>stop</code> a <code>add</code> dělají totéž a nahrávání oblasti a záznam kroků se navzájem vylučují.</div></li>
+        </ul>
+      </div>
+      <div class="art rv"><div class="stack"><figure class="shotfig"><img src="../img/cs/record_steps.webp" alt="Krok ze záznamu kroků s červeným kruhem a číslem kroku" loading="lazy"></figure></div></div>
+    </div>
+
+    <div class="crow flip" id="reopen">
+      <div class="rv">
+        <h3>Snímek, ke kterému se dá vrátit</h3>
+        <p class="lead">Snímek není jen obrázek. Shot drží kresby odděleně od obrázku, takže ho můžeš později otevřít a změnit, co jsi nakreslil.</p>
+        <ul class="can">
+        <li><div><b>Karta po každém snímku.</b> Po zkopírování nebo uložení zůstane v pravém dolním rohu 6 sekund karta s miniaturou. Upravit otevře snímek znovu v Shotu s jeho kresbami.</div></li>
+        <li><div><b>Projekt, ne jen PNG.</b> Každý snímek se uchová i jako projekt <code>.shot</code>, obrázek bez kreseb a kresby vztažené k oblasti. Po otevření jde šipky, rámečky a texty znovu vybrat a změnit, ne přemalovat.</div></li>
+        <li><div><b>Historie.</b> Nejnovější snímky jsou vypsané v menu v panelu a kolik se jich uchová, je nastavení.</div></li>
+        <li><div><b>Víc oblastí v jednom snímku.</b> Ctrl+tažení přidá další oblast a výsledek nechá každou na jejím místě a mezi nimi je průhledno. Laso vystřihne volný tvar.</div></li>
+        </ul>
+      </div>
+      <div class="art rv"><div class="stack"><figure class="shotfig"><img src="../img/cs/deliver_card.webp" alt="Karta s miniaturou v rohu monitoru po snímku" loading="lazy"></figure></div></div>
+    </div>
+    <p class="lead rv" style="max-width:52em;margin:34px auto 0;font-size:16px;text-align:center">V říjnu 2026 autor prošel funkce 14 nástrojů na snímky obrazovky, mezi nimi ShareX, Snagit, CleanShot X, Shottr, Flameshot, Ksnip a Spectacle. Několik částí výše, třeba skrolovací snímek, pevné velikosti oblasti a otevření snímku znovu s jeho kresbami, je známých z komerčních nástrojů. Shot je má bez ceny a pro Linux.</p>
+  </div>
+</section>
+
+<!-- HIGHLIGHTS -->
+<section class="chap full" id="highlights">
+  <div class="wrap">
+    <div class="centerhead rv">
+      <h2>Co Shot umí</h2>
+      <p class="lead">Osm věcí, každá má dole svou kapitolu.</p>
+    </div>
+    <div class="hl-grid">
+      <a class="hl rv" href="#capture"><h3>Vybrat, co se nasnímá</h3><p>Oblast přes víc monitorů, okno, celý monitor nebo víc oblastí najednou.</p></a>
+      <a class="hl rv" href="#draw"><h3>Kreslit do snímku</h3><p>Šipky, rámečky, čísla, text, razítka, zvětšený detail a další, každý krok jde vrátit.</p></a>
+      <a class="hl rv" href="#redact"><h3>Zakrýt, co nemá být vidět</h3><p>Pixelace, rozmazání, nebo nech Shot najít e-maily, čísla účtů a karet.</p></a>
+      <a class="hl rv" href="#effects"><h3>Dotáhnout obrázek</h3><p>Stín, rámeček, zaoblené rohy, vytržený okraj, otočení a pozadí.</p></a>
+      <a class="hl rv" href="#deliver"><h3>Poslat dál</h3><p>Zkopírovat, uložit, připnout na obrazovku, otevřít v editoru, přečíst text nebo nahrát.</p></a>
+      <a class="hl rv" href="#scroll"><h3>Nasnímat, co se nevejde</h3><p>Shot obsah sám posouvá a snímky spojí, dolů i do strany.</p></a>
+      <a class="hl rv" href="#record"><h3>Nahrávat</h3><p>Oblast jako krátké WebP nebo GIF, nebo každý klik jako číslovaný krok v dokumentu.</p></a>
+      <a class="hl rv" href="#settings"><h3>Nastavit po svém</h3><p>Složka, jméno souboru, kvalita, cíle, zkratky a vzhled panelů.</p></a>
+    </div>
+  </div>
+</section>
+
+<section class="chap" id="capture">
+  <div class="wrap">
+    <div class="rv">
+      <p class="num">01</p>
+      <h2>Vybrat, co se nasnímá</h2>
+      <p class="lead">Shot zastaví obraz na všech monitorech najednou. Táhni přes zastavený obraz, oblast může přecházet přes monitory, a lupa ukazuje pixel pod ukazatelem i jeho souřadnice.</p>
+      <ul class="can">
+        <li><div><b>Oblast, okno nebo monitor.</b> Tažením vybereš oblast, kliknutím mimo ni okno pod ukazatelem, Shift+kliknutím celý monitor. Okno vybrané klikem se zachytí samo, s průhlednými zaoblenými rohy.</div></li>
+        <li><div><b>Víc oblastí.</b> Ctrl+tažení přidá do téhož snímku další oblast. Výsledek nechá každou oblast na jejím místě a mezi nimi je průhledno.</div></li>
+        <li><div><b>Přesná velikost.</b> Ctrl+R přijme velikost třeba 1280x720, uloženou předvolbu nebo zámek poměru stran. Šipky posouvají oblast o jeden pixel.</div></li>
+        <li><div><b>Okraje se přichytávají</b> k okrajům oken a monitorů, Alt přichytávání vypne. Ctrl+kolečko přiblíží zastavený obraz až 8x pro přesnou práci.</div></li>
+        <li><div><b>Alt+tažení uvnitř oblasti</b> zvedne, co v ní je, a položí to tam, kde pustíš, třeba doprostřed monitoru, kde je kolem místo na lišty a kreslení.</div></li>
+        <li><div><b>Odklad a opakování.</b> Ctrl+D nasnímá po odpočtu, takže se dá napřed otevřít menu. Ctrl+L zapamatuje oblast pro opakované snímky jednoho místa.</div></li>
+      </ul>
+    </div>
+    <div class="art rv"><div class="stack"><figure class="shotfig"><img src="../img/cs/capture.webp" alt="Oblast vybraná přes okno aplikace, nad ní rozměr a kolem ní lišty" loading="lazy"></figure></div></div>
+  </div>
+</section>
+
+<section class="chap band full" id="draw">
+  <div class="wrap">
+    <div class="centerhead rv">
+      <p class="num">02</p>
+      <h2>Kreslit do zastaveného obrazu</h2>
+      <p class="lead">Nástroje jsou v liště pod oblastí a každý má klávesu, většinou stejnou jako ve Flameshotu. Každá kresba je krok pro Zpět a dá se později vybrat a upravit.</p>
+    </div>
+    <div class="tools">
+      <div class="tool rv"><b>Tužka</b><span>Volná čára. Klávesa P.</span></div>
+      <div class="tool rv"><b>Čára</b><span>Přímá, se Shiftem po 15 stupních. Klávesa D.</span></div>
+      <div class="tool rv"><b>Šipka</b><span>Dalším A se mění hroty. Klávesa A.</span></div>
+      <div class="tool rv"><b>Obdélník</b><span>Obrys S, plný R. Se Shiftem čtverec.</span></div>
+      <div class="tool rv"><b>Kruh</b><span>Klávesa C. S Ctrl od středu.</span></div>
+      <div class="tool rv"><b>Zvýrazňovač</b><span>Průsvitný tah. Klávesa M.</span></div>
+      <div class="tool rv"><b>Číslo</b><span>Číslované body pro seznam kroků. Dalším N se nastaví začátek.</span></div>
+      <div class="tool rv"><b>Text</b><span>Tučně Ctrl+B, kurzíva Ctrl+I, zarovnání a pozadí. Klávesa T.</span></div>
+      <div class="tool rv"><b>Bublina</b><span>Text v bublině, která na něco ukazuje. Klávesa O.</span></div>
+      <div class="tool rv"><b>Razítka a emoji</b><span>OK, chyba, varování, informace, otázka, hvězda. Klávesa E.</span></div>
+      <div class="tool rv"><b>Kontextové razítko</b><span>Čas, aplikace a titulek okna jako text. Klávesa W.</span></div>
+      <div class="tool rv"><b>Zvětšený detail</b><span>Táhni přes malý detail a polož jeho zvětšeninu. Klávesa Z.</span></div>
+      <div class="tool rv"><b>Zvýraznění</b><span>Ztmavit okolí, okolí v šedi, lupa uvnitř nebo podbarvení oblasti. Klávesa H.</span></div>
+      <div class="tool rv"><b>Kurzor</b><span>Nakreslí ukazatel myši, aby bylo vidět, kam kliknout. Klávesa K.</span></div>
+      <div class="tool rv"><b>Měření</b><span>Vzdálenost dvou bodů v pixelech. Klávesa L.</span></div>
+      <div class="tool rv"><b>Barva z obrazovky</b><span>HEX, RGB a kontrast WCAG proti předchozí barvě. Klávesa G.</span></div>
+      <div class="tool rv"><b>Vystřižení pruhu</b><span>Vyjme vodorovný nebo svislý pruh a zbytek spojí, aby se zkrátilo dlouhé okno. Ctrl+Z ho vrátí. Klávesa X.</span></div>
+    </div>
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:44px;align-items:center;margin-top:44px" class="two">
+      <p class="lead" style="font-size:17px">Kliknutí na kresbu ji vybere, Shift+klik přidá další. Vybraná čára nebo šipka ukáže tečky na svých bodech a tažení plusu uprostřed úseku přidá bod. Přichytávání k ostatním kresbám a k oblasti vypne Alt.</p>
+      <div><figure class="shotfig"><img src="../img/cs/draw.webp" alt="Oblast se šipkou, obdélníkem, číslovanými body a textem" loading="lazy"></figure></div>
+    </div>
+  </div>
+</section>
+
+<section class="chap flip" id="effects">
+  <div class="wrap">
+    <div class="rv">
+      <p class="num">03</p>
+      <h2>Dotáhnout obrázek</h2>
+      <p class="lead">Ctrl+F otevře efekty celého obrázku s okamžitým náhledem. Patří do obrázku, který odchází, a můžou zůstat zapnuté i pro další snímky.</p>
+      <ul class="can">
+        <li><div><b>Stín a rámeček.</b> Měkký stín pod obrázkem a rámeček v barvě a šířce, jakou zvolíš.</div></li>
+        <li><div><b>Vytržený papír.</b> Obrázek vypadá jako vytržený z listu, s náhodně roztrhanými okraji a stínem podél trhliny.</div></li>
+        <li><div><b>Tvar.</b> Zaoblené rohy, ořez okraje, otočení (Ctrl+čárka a Ctrl+tečka otočí o čtvrtinu) a měřítko výstupu.</div></li>
+        <li><div><b>Pozadí.</b> Okraj kolem obrázku v barvě nebo přechodu a verze v odstínech šedi.</div></li>
+      </ul>
+    </div>
+    <div class="art rv"><div class="stack"><figure class="shotfig"><img src="../img/cs/effects.webp" alt="Panel efektů a obrázek se stínem, zaoblenými rohy a okrajem" loading="lazy"></figure></div></div>
+  </div>
+</section>
+
+<section class="chap band" id="deliver">
+  <div class="wrap">
+    <div class="rv">
+      <p class="num">04</p>
+      <h2>Poslat dál</h2>
+      <p class="lead">Enter zkopíruje a cokoli dalšího je na dosah klávesy nebo kliknutí. Tab otevře seznam cílů.</p>
+      <ul class="can">
+        <li><div><b>Kopírovat a uložit.</b> Enter, Ctrl+C nebo dvojklik zkopíruje, Ctrl+S uloží a Ctrl+Shift+S uloží jako. Do schránky jde vždy PNG. Vzor jména souboru a složka jsou v nastavení.</div></li>
+        <li><div><b>Poslat do.</b> Tab nabídne kopírování, uložení, uložení jako, připnutí, editor obrázků, přečtení textu (tesseract) a Imgur s vlastním Client-ID.</div></li>
+        <li><div><b>Připnuté obrázky.</b> Ctrl+P připne obrázek nad obrazovku. Tažení ho posune, kolečko zvětší, Ctrl+kolečko mění průhlednost a pravé tlačítko otevře menu, ve kterém jde zapnout i proklikávání.</div></li>
+      </ul>
+    </div>
+    <div class="art rv"><div class="stack"><figure class="shotfig"><img src="../img/cs/deliver_send.webp" alt="Seznam cílů otevřený klávesou Tab nad nasnímanou oblastí" loading="lazy"></figure></div></div>
+  </div>
+</section>
+
+<section class="chap" id="record">
+  <div class="wrap" style="display:block;max-width:860px">
+    <div class="rv">
+      <p class="num">05</p>
+      <h2>Nahrávat</h2>
+      <p class="lead">Dva způsoby, jak ukázat postup: krátké nahrání oblasti, nebo dokument sestavený z tvých kliků.</p>
+      <ul class="can">
+        <li><div><b>Nahrání oblasti.</b> Ctrl+Shift+V nebo tlačítko Nahrát zavře překryv a nahrává živou obrazovku v oblasti. Těsně vně oblasti je tenký červený rámeček, takže v nahrávce není, a každé kliknutí ukáže červenou vlnku.</div></li>
+        <li><div><b>WebP nebo GIF.</b> Nahrávku převede ffmpeg, výchozí je WebP, který je mnohem menší než GIF, 15 snímků za sekundu. Zastaví se položkou v menu v panelu, klávesou Shotu nebo po časovém limitu (zprvu 60 sekund).</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="chap flip band" id="monitors">
+  <div class="wrap">
+    <div class="rv">
+      <p class="num">06</p>
+      <h2>Víc monitorů</h2>
+      <p class="lead">Překryv bere všechny tvoje monitory jako jednu obrazovku.</p>
+      <ul class="can">
+        <li><div><b>Jeden zastavený obraz.</b> Všechny monitory se zastaví společně, oblast může přejít přes hranici a Ctrl+A vezme celou plochu. Nastavení umí začít každý snímek výběrem monitoru.</div></li>
+        <li><div><b>Lišty zůstávají vedle oblasti.</b> Nástroje kreslení pod ní, zvláštní nástroje vlevo, výstup vpravo, celé, i přes hranici dvou monitorů. Lišta oblast nezakrývá, dokud je někde místo.</div></li>
+        <li><div><b>Když na straně není místo,</b> jde levá lišta napravo od oblasti, pravá nalevo a nástroje kreslení nad ni, a teprve potom podél okraje monitoru dovnitř oblasti. Žádná lišta nezmizí.</div></li>
+        <li><div><b>Místo kolem malé oblasti.</b> Alt+tažení uvnitř oblasti ji zvedne a položí tam, kde je volno.</div></li>
+      </ul>
+    </div>
+    <div class="art rv"><div class="stack"><figure class="shotfig"><img src="../img/cs/monitors.webp" alt="Lišty vedle úzké oblasti na okraji monitoru" loading="lazy"></figure></div></div>
+  </div>
+</section>
+
+<section class="chap" id="settings">
+  <div class="wrap" style="display:block">
+    <div class="centerhead rv">
+      <p class="num">07</p>
+      <h2>Nastavení</h2>
+      <p class="lead">Okno nastavení se otevře z menu v panelu nebo z překryvu. Většina je na jedné stránce Obecné, pak jsou Klávesy a O aplikaci.</p>
+    </div>
+    <div class="rv" style="max-width:860px;margin:0 auto 40px"><figure class="shotfig"><img src="../img/cs/settings.webp" alt="Okno nastavení Shotu, stránka Obecné" loading="lazy"></figure></div>
+    <div class="sgrid">
+      <div class="sgroup rv">
+        <h3>Ukládání</h3>
+        <ul class="opts">
+          <li><b>Složka a jméno souboru</b><span>Složka pro Uložit a vzor s datem, časem, počítadlem a náhodnou částí.</span></li>
+          <li><b>Kvalita JPG</b><span>Schránka zůstává PNG bez ohledu na formát souboru.</span></li>
+          <li><b>Po uložení nebo zkopírování</b><span>Nic, miniatura, nebo karta s akcemi a jak dlouho zůstane.</span></li>
+        </ul>
+      </div>
+      <div class="sgroup rv">
+        <h3>Obrazovka</h3>
+        <ul class="opts">
+          <li><b>Ztmavení mimo oblast</b><span>Jak tmavý je zastavený obraz kolem oblasti.</span></li>
+          <li><b>Pamatovat poslední oblast, napřed vybrat monitor</b><span>Dva způsoby, jak začít další snímek rychleji.</span></li>
+          <li><b>Lupa, rozměr, krátké názvy pod ikonami</b><span>Co překryv ukazuje při výběru.</span></li>
+          <li><b>Historie a ukazatel</b><span>Kolik snímků se uchová a jestli je ve snímku skutečný ukazatel.</span></li>
+        </ul>
+      </div>
+      <div class="sgroup rv">
+        <h3>Kreslení</h3>
+        <ul class="opts">
+          <li><b>Barva a tloušťka</b><span>Drží se podle posledního použití, nebo zůstanou, jak jsou.</span></li>
+          <li><b>Hroty šipky, začátek počítadla, krytí výplně</b><span>Počáteční hodnoty nástrojů.</span></li>
+          <li><b>Přichytávání kreseb</b><span>K sobě navzájem a k oblasti, Alt ho při tažení vypne.</span></li>
+          <li><b>Text a kontextové razítko</b><span>Zarovnání, pozadí pod novými texty a formát razítka.</span></li>
+        </ul>
+      </div>
+      <div class="sgroup rv">
+        <h3>Nahrávání a kroky</h3>
+        <ul class="opts">
+          <li><b>Formát a rychlost</b><span>WebP nebo GIF, snímky za sekundu a časový limit.</span></li>
+          <li><b>Ukazatel a vlnky</b><span>Jestli je v nahrávce ukazatel myši a vlnka u každého kliknutí.</span></li>
+          <li><b>Záznam kroků</b><span>Krok nasnímá monitor nebo okno pod ukazatelem a volba zakrývat osobní údaje.</span></li>
+        </ul>
+      </div>
+      <div class="sgroup rv">
+        <h3>Skrolovací snímek a efekty</h3>
+        <ul class="opts">
+          <li><b>Kde skrolovací snímek začíná</b><span>Zeptat se, vždy odsud nebo vždy od začátku, a nejvyšší obrázek.</span></li>
+          <li><b>Efekty celého obrázku</b><span>Stín, rámeček, šedá, vytržený papír, měřítko, zaoblení a pozadí, držené pro další snímky.</span></li>
+        </ul>
+      </div>
+      <div class="sgroup rv">
+        <h3>Cíle</h3>
+        <ul class="opts">
+          <li><b>Co dělá Enter</b><span>Zeptat se přes seznam cílů, nebo rovnou kopírovat či uložit.</span></li>
+          <li><b>Jazyky rozpoznávání textu</b><span>Kódy tesseractu spojené plusem, třeba eng+ces.</span></li>
+          <li><b>Imgur a editor</b><span>Vlastní Client-ID pro Imgur a program pro Otevřít v editoru.</span></li>
+        </ul>
+      </div>
+      <div class="sgroup rv">
+        <h3>Klávesy</h3>
+        <ul class="opts">
+          <li><b>Zkratky</b><span>Print spustí snímek a Alt+Print vezme aktivní okno. Obě se mění tady a každá klávesa překryvu má své místo na stránce Klávesy.</span></li>
+          <li><b>Záloha</b><span>Všechna nastavení a zkratky se uloží do souboru JSON a z něj se vrátí. Imgur Client-ID se do něj nedává.</span></li>
+        </ul>
+      </div>
+      <div class="sgroup rv">
+        <h3>O aplikaci</h3>
+        <ul class="opts">
+          <li><b>Verze a novinky</b><span>Verze, změny v ní a kontrola novější verze.</span></li>
+          <li><b>Aktualizace</b><span>Jednou denně se Shot zeptá GitHubu na nejnovější vydání a nic dalšího se neodesílá. Kontrolu jde vypnout a aktualizace se stáhne, ověří podle podpisu a nainstaluje z téže stránky.</span></li>
+          <li><b>Průvodce</b><span>Průvodce, který tě vyzve, ať hlavní funkce vyzkoušíš na vlastní obrazovce.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="chap band full" id="keys">
+  <div class="wrap">
+    <div class="centerhead rv">
+      <p class="num">08</p>
+      <h2>Klávesy na jedné stránce</h2>
+      <p class="lead">F1 otevře uvnitř Shotu stejnou nápovědu s hledáním, které funguje i bez diakritiky.</p>
+    </div>
+    <div class="keywrap rv">
+      <table class="keytable">
+        <thead><tr><th>Klávesa</th><th>Co dělá</th></tr></thead>
+        <tbody>
+        <tr><td><kbd>Print</kbd></td><td>Spustí snímek. Alt+Print vezme aktivní okno.</td></tr>
+        <tr><td><kbd>tažení</kbd></td><td>Vybere oblast. Klik mimo ni vezme okno, Shift+klik monitor.</td></tr>
+        <tr><td><kbd>Ctrl+tažení</kbd></td><td>Přidá do téhož snímku další oblast.</td></tr>
+        <tr><td><kbd>Alt+tažení</kbd></td><td>Zvedne obsah oblasti a položí ho tam, kde pustíš.</td></tr>
+        <tr><td><kbd>Ctrl+R</kbd></td><td>Velikost oblasti a poměr stran.</td></tr>
+        <tr><td><kbd>Ctrl+A</kbd></td><td>Celá plocha. Ctrl+Backspace oblast zruší.</td></tr>
+        <tr><td><kbd>P D A S R C M</kbd></td><td>Tužka, čára, šipka, obdélník, plný obdélník, kruh, zvýrazňovač.</td></tr>
+        <tr><td><kbd>N K T O E W</kbd></td><td>Číslo, kurzor, text, bublina, razítko, kontextové razítko.</td></tr>
+        <tr><td><kbd>B U I H</kbd></td><td>Pixelace, rozmazání, inverze, zvýraznění.</td></tr>
+        <tr><td><kbd>X L J Z G F</kbd></td><td>Vystřižení pruhu, měření, laso, zvětšený detail, barva z obrazovky, výplň a stín.</td></tr>
+        <tr><td><kbd>Ctrl+M</kbd></td><td>Výběr a posun kreseb.</td></tr>
+        <tr><td><kbd>Ctrl+Z</kbd></td><td>Zpět. Ctrl+Shift+Z vrátí dopředu a Backspace smaže poslední kresbu.</td></tr>
+        <tr><td><kbd>Ctrl+Shift+R</kbd></td><td>Najde osobní údaje a pixeluje je.</td></tr>
+        <tr><td><kbd>Ctrl+F</kbd></td><td>Efekty celého obrázku.</td></tr>
+        <tr><td><kbd>Enter</kbd></td><td>Zkopíruje, nebo udělá to, co říká nastavení. Ctrl+C kopíruje, Ctrl+S ukládá.</td></tr>
+        <tr><td><kbd>Tab</kbd></td><td>Seznam cílů.</td></tr>
+        <tr><td><kbd>Ctrl+P</kbd></td><td>Připne obrázek na obrazovku. Ctrl+E ho otevře v editoru.</td></tr>
+        <tr><td><kbd>Ctrl+D</kbd></td><td>Odložený snímek. Ctrl+L zapamatuje oblast.</td></tr>
+        <tr><td><kbd>Ctrl+Shift+V</kbd></td><td>Nahraje oblast.</td></tr>
+        <tr><td><kbd>Ctrl+Shift+Print</kbd></td><td>Spustí a zastaví záznam kroků. Shift+Alt+Print přidá krok.</td></tr>
+        <tr><td><kbd>F1</kbd></td><td>Nápověda ke každé funkci.</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>První stisk ukáže, že další zavře, druhý zavře.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="chap" id="install">
+  <div class="wrap" style="display:block;max-width:860px">
+    <div class="rv">
+      <p class="num">09</p>
+      <h2>Instalace</h2>
+      <p class="lead">Shot je rozšíření GNOME Shellu a Cinnamonu, na jiných desktopech neběží.</p>
+      <ul class="can"><li><div><b>Podporováno.</b> GNOME Shell 45 až 50 na Waylandu i na X11 a Cinnamon 6 na X11, třeba Linux Mint 21.3 a 22.3. GNOME 42 až 44 a starší Cinnamon instalátor odmítne.</div></li></ul>
+      <ol class="steps">
+        <li><div>Stáhni <code>shot-&lt;verze&gt;-linux.sh</code> a jeho podpis <code>.sig</code> z nejnovějšího vydání na stránce Releases repozitáře <code>mdiskuze/shot</code> na GitHubu.</div></li>
+        <li><div>Spusť ho příkazem <code>sh shot-&lt;verze&gt;-linux.sh</code>. Na Ubuntu, Debianu a Mintu doinstaluje přes apt chybějící volitelné programy, třeba ffmpeg, tesseract a zenity, a načte Shot do běžícího Shellu.</div></li>
+        <li><div>Stiskni Print. Průvodce v menu v panelu tě provede hlavními funkcemi na tvé obrazovce.</div></li>
+      </ol>
+      <p class="lead" style="margin-top:22px;font-size:16px">Další verze se instalují ze stránky O aplikaci v nastavení. Stažený soubor se před spuštěním ověří podle podpisu.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Shot je soukromý projekt. Vydání a hlášení problémů jsou ve veřejném repozitáři <a href="https://github.com/mdiskuze/shot">mdiskuze/shot</a>.</p>
+    <p>Screenshoty na téhle stránce pořídil Shot na testovacím desktopu s vymyšlenými údaji.</p>
+  </div>
+</footer>
+
+<script>
+document.documentElement.classList.add('js');
+(function(){
+  var links={};document.querySelectorAll('.chapters a').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.12});
+    document.querySelectorAll('.rv').forEach(function(n){io.observe(n)});
+    var so=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].classList.toggle('on',k===e.target.id)});
+        var a=links[e.target.id]; if(a&&a.scrollIntoView){var nav=a.parentNode.parentNode; nav.scrollTo({left:a.offsetLeft-24,behavior:'smooth'})}}
+    })},{rootMargin:'-40% 0px -55% 0px'});
+    document.querySelectorAll('section.chap').forEach(function(s){so.observe(s)});
+  }else{document.querySelectorAll('.rv').forEach(function(n){n.classList.add('in')})}
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shot - screenshots and annotations for GNOME and Cinnamon</title>
+<meta name="description" content="Capture a region, a window or all monitors, draw on it, hide personal data, scroll long pages and record steps. A tour of every function and setting of Shot.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<link rel="canonical" href="https://mdiskuze.github.io/shot/tour/">
+<link rel="alternate" hreflang="en" href="https://mdiskuze.github.io/shot/tour/">
+<link rel="alternate" hreflang="cs" href="https://mdiskuze.github.io/shot/tour/cs/">
+<link rel="alternate" hreflang="x-default" href="https://mdiskuze.github.io/shot/tour/">
+<meta property="og:title" content="Shot - screenshots and annotations for GNOME and Cinnamon">
+<meta property="og:description" content="A screenshot tool for GNOME and Cinnamon with a drawing editor, scrolling capture, step recorder and screen recording.">
+<meta property="og:image" content="https://mdiskuze.github.io/shot/tour/img/banner.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{
+  --ground:#f7f8fa; --surface:#eef0f4; --surface-2:#e3e6ec; --ink:#16181d; --ink-2:#4f5663; --line:#d8dce4;
+  --accent:#b3261e; --accent-ink:#ffffff; --tint:#fbe3e0;
+  --shadow:0 1px 2px rgba(20,24,40,.08),0 14px 34px -14px rgba(20,24,40,.35);
+  --radius:22px; --max:1160px;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#14161a; --surface:#1c1f25; --surface-2:#262a32; --ink:#eceef2; --ink-2:#aeb4c0; --line:#343944;
+    --accent:#ff8a80; --accent-ink:#2a0805; --tint:#3a1f1d; --shadow:0 14px 34px -14px rgba(0,0,0,.75);
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--ground);color:var(--ink);font:400 17px/1.6 var(--font);-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--accent)}
+h1,h2,h3{line-height:1.12;letter-spacing:-.02em;margin:0}
+p{margin:0}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:8px}
+kbd,code{font:600 .88em var(--mono);background:var(--surface-2);padding:1px 7px;border-radius:7px;color:var(--ink);white-space:nowrap}
+kbd{border:1px solid var(--line);border-bottom-width:2px}
+
+/* header */
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--ground) 88%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:16px;min-height:64px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+.brand{font-weight:700;font-size:20px;letter-spacing:-.02em;display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none}
+.brand i{width:26px;height:26px;border:3px solid var(--accent);border-radius:5px;display:block;position:relative}
+.brand i::after{content:"";position:absolute;right:-7px;bottom:-7px;width:10px;height:10px;background:var(--accent);border-radius:2px}
+.langs{margin-left:auto;display:flex;gap:2px}
+.langs a{font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--ink-2);text-decoration:none;padding:10px 9px;min-height:44px;display:inline-flex;align-items:center;border-radius:10px}
+.langs a[aria-current="true"]{color:var(--ink);background:var(--surface-2)}
+.langs a:hover{background:var(--surface)}
+.chapters{border-top:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.chapters::-webkit-scrollbar{display:none}
+.chapters .wrap{display:flex;flex-wrap:nowrap;gap:4px;padding-top:6px;padding-bottom:6px}
+.chapters a{white-space:nowrap;text-decoration:none;color:var(--ink-2);font-size:14px;font-weight:600;padding:9px 12px;border-radius:999px;min-height:40px;display:inline-flex;align-items:center}
+.chapters a:hover{background:var(--surface)}
+.chapters a.on{background:var(--tint);color:var(--ink)}
+
+/* hero */
+.hero{padding:56px 0 44px;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:.95fr 1.05fr;gap:44px;align-items:center}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-size:clamp(38px,5.4vw,62px);margin:14px 0 18px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.lead{font-size:clamp(18px,2vw,21px);color:var(--ink-2);max-width:34em}
+.pledges{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;padding:0;list-style:none}
+.pledges li{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-size:15px;font-weight:600}
+
+/* a screenshot of the desktop in a plain frame */
+.shotfig{margin:0;border-radius:16px;background:#101216;padding:6px;box-shadow:var(--shadow)}
+.shotfig img{border-radius:11px;width:100%;height:auto;background:#101216}
+.shotfig.tall img{max-height:620px;width:auto;margin:0 auto}
+.shotfig figcaption{font-size:14px;color:#c7ccd6;padding:10px 8px 4px;text-align:center}
+.stack{display:grid;gap:18px;width:100%}
+
+/* chapters */
+.chap{padding:72px 0;border-top:1px solid var(--line)}
+.chap .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:52px;align-items:center}
+.chap.flip .art{order:-1}
+.num{font-size:14px;font-weight:800;color:var(--accent);letter-spacing:.1em}
+.chap h2{font-size:clamp(30px,4vw,44px);margin:10px 0 16px}
+.chap .lead{font-size:19px}
+.can{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:12px}
+.can li{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start}
+.can li::before{content:"";width:22px;height:22px;margin-top:3px;border-radius:50%;background:var(--tint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='%23b3261e' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
+.can b{font-weight:650}
+.art{display:flex;justify-content:center;position:relative}
+.band{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.centerhead{text-align:center;max-width:44em;margin:0 auto 34px}
+.centerhead h2{font-size:clamp(30px,4vw,44px);margin:10px 0 16px}
+.chap.full .wrap{display:block}
+
+/* the closer look: rows of text and a picture */
+.crow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:52px;align-items:center;padding:48px 0;border-top:1px solid var(--line)}
+.crow:first-of-type{border-top:0}
+.crow.flip .art{order:-1}
+.crow h3{font-size:clamp(26px,3.2vw,36px);margin-bottom:14px;letter-spacing:-.02em}
+.crow .lead{font-size:18px}
+
+/* tool grid */
+.tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:8px}
+.tool{background:var(--ground);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.tool b{display:flex;align-items:center;gap:8px;font-size:16px}
+.tool span{display:block;color:var(--ink-2);font-size:14.5px;line-height:1.45;margin-top:4px}
+
+/* highlights */
+.hl-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.hl{display:flex;flex-direction:column;gap:8px;background:var(--ground);border:1px solid var(--line);border-radius:var(--radius);padding:22px;color:inherit;text-decoration:none;transition:border-color .2s,transform .2s}
+.hl:hover{border-color:var(--accent);transform:translateY(-2px)}
+.hl h3{font-size:19px;line-height:1.2}
+.hl h3::after{content:" \2192";color:var(--accent)}
+.hl p{color:var(--ink-2);font-size:15.5px;line-height:1.5}
+
+/* settings */
+.sgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.sgroup{background:var(--ground);border:1px solid var(--line);border-radius:var(--radius);padding:26px}
+.sgroup h3{font-size:21px;margin-bottom:6px}
+.sgroup>p{color:var(--ink-2);font-size:15.5px}
+.opts{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:12px}
+.opts li{display:grid;gap:2px;padding-top:12px;border-top:1px solid var(--line)}
+.opts li:first-child{border-top:0;padding-top:0}
+.opts b{font-weight:650}
+.opts span{color:var(--ink-2);font-size:15.5px;line-height:1.5}
+
+/* keys */
+.keytable{width:100%;border-collapse:collapse;font-size:15.5px}
+.keytable th,.keytable td{text-align:left;padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+.keytable th{font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);border-top:0}
+.keytable td:first-child{white-space:nowrap;width:1%}
+.keywrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:10px 14px;overflow-x:auto}
+
+/* install */
+.steps{counter-reset:s;list-style:none;margin:20px 0 0;padding:0;display:grid;gap:12px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}
+.steps li::before{content:counter(s);width:30px;height:30px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:800;display:grid;place-items:center;font-size:15px}
+.cmd{display:block;margin-top:6px;font:600 14.5px var(--mono);background:#101216;color:#e8eaf0;padding:12px 14px;border-radius:12px;overflow-x:auto;white-space:pre}
+
+footer{padding:56px 0 80px;border-top:1px solid var(--line);color:var(--ink-2);font-size:15px}
+footer .wrap{display:grid;gap:10px}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+html:not(.js) .rv{opacity:1;transform:none}
+
+@media(max-width:900px){
+  .hero .wrap,.chap .wrap{grid-template-columns:1fr;gap:34px}
+  .chap.flip .art,.crow.flip .art{order:0}
+  .crow{grid-template-columns:1fr;gap:30px}
+  .sgrid{grid-template-columns:1fr}
+  .hl-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .chap{padding:56px 0}
+}
+@media(max-width:560px){.hl-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body><header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><i></i>Shot</a>
+    <nav class="langs" aria-label="Language">
+      <a href="./" hreflang="en" lang="en" aria-current="true">EN</a><a href="cs/" hreflang="cs" lang="cs">CS</a>
+    </nav>
+  </div>
+  <nav class="chapters" aria-label="Chapters">
+    <div class="wrap">
+      <a href="#closer">Closer look</a><a href="#highlights">Highlights</a><a href="#capture">Capture</a><a href="#draw">Draw</a><a href="#effects">Effects</a><a href="#deliver">Output</a><a href="#record">Recording</a><a href="#monitors">Monitors</a><a href="#settings">Settings</a><a href="#keys">Keys</a><a href="#install">Install</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Screenshots for GNOME and Cinnamon</p>
+      <h1>Take it, <em>mark it up</em>, copy it</h1>
+      <p class="lead">Shot freezes all your monitors at once. You pick a region, a window or a monitor, draw on the frozen screen and then copy, save, pin, upload or read the text from the result. What a screenshot for documentation needs is in one overlay.</p>
+      <ul class="pledges">
+        <li>No account</li><li>No third-party code</li><li>Uploads only when you press Upload</li>
+      </ul>
+      <p class="lead" style="margin-top:26px;font-size:16px">Runs on GNOME 45 to 50 (Wayland and X11) and on Linux Mint with Cinnamon 6 (X11). The screenshots here are taken from Shot itself.</p>
+    </div>
+    <div><figure class="shotfig"><img src="img/en/hero.webp" alt="The Shot overlay: a region chosen on the frozen screen with the toolbars around it" loading="lazy"></figure></div>
+  </div>
+</section>
+
+<!-- CLOSER LOOK -->
+<section class="chap band full" id="closer">
+  <div class="wrap">
+    <div class="centerhead rv">
+      <p class="eyebrow">Closer look</p>
+      <h2>Four things worth a closer look</h2>
+      <p class="lead">Most of Shot is what you expect from a screenshot tool. These four parts are made for screenshots of documentation, of long content and of procedures, and they are described here in detail.</p>
+    </div>
+
+    <div class="crow" id="scroll">
+      <div class="rv">
+        <h3>Scrolling capture, and a Stop for when it never ends</h3>
+        <p class="lead">Choose a region over a long page, a chat, a list or a table and press Scroll. Shot scrolls the content under the region by itself, takes a picture after every step and joins them into one tall picture. It works in applications that scroll with the mouse wheel.</p>
+        <ul class="can">
+        <li><div><b>Stop at any moment.</b> A red Stop button sits just under the region the whole time. Press it and Shot ends the run and gives you what is joined so far. This is the way to end a table or a feed that has no end, where waiting would only reach the height limit.</div></li>
+        <li><div><b>From here or from the start.</b> Shot asks, and with the second answer it first scrolls back to the beginning of the content. The setting Where a scrolling capture starts remembers the answer.</div></li>
+        <li><div><b>It waits for the picture to hold still.</b> After every step Shot compares two pictures a moment apart and takes the one that no longer moves, so a page that scrolls smoothly or loads more while it scrolls is not read in the middle of its movement.</div></li>
+        <li><div><b>It joins by what is on the pictures.</b> A step is about half the region, so the pictures overlap, and Shot finds the shift by comparing rows. A fixed header or footer is taken once, a scrollbar and the shade of an item under the pointer do not confuse it, and when two pictures do not join it goes back and takes a smaller step.</div></li>
+        <li><div><b>It ends by itself</b> when the content stops moving three times in a row, or at the longest picture set in the settings (30000 pixels at first).</div></li>
+        <li><div><b>Do not switch to another window</b> until it ends. The wheel goes to the window under the pointer, and the next steps would scroll the wrong thing.</div></li>
+        <li><div><b>Where the wheel does nothing</b> Shot notices after two steps, asks you to scroll yourself and takes the pictures as you go. Shot's own key finishes it.</div></li>
+        <li><div><b>Sideways, and the result is a normal picture.</b> The Sideways button does the same for a wide table or a timeline. The result opens as a tall or wide picture you can scroll, draw on and copy like any other.</div></li>
+        </ul>
+      </div>
+      <div class="art rv"><div class="stack"><figure class="shotfig tall"><img src="img/en/scroll.webp" alt="A tall picture made from a long list, opened in the overlay" loading="lazy"></figure></div></div>
+    </div>
+
+    <div class="crow flip" id="redact">
+      <div class="rv">
+        <h3>Personal data found and covered for you</h3>
+        <p class="lead">Ctrl+Shift+R reads the picture and puts a pixelation on every e-mail, phone number, account number, IBAN and card number it finds. You check the result and send the picture on.</p>
+        <ul class="can">
+        <li><div><b>How it looks for them.</b> Shot runs the text recognition of tesseract four times next to each other, on the picture at its size, enlarged twice, enlarged three times and enlarged three times and slightly blurred, and merges what the four passes found. The languages are set in the settings, for example eng+ces.</div></li>
+        <li><div><b>Ordinary drawings.</b> Every finding becomes a pixelation drawn like any other, so you can move it, remove it or add one for something Shot missed. Ctrl+Z takes all of them back at once.</div></li>
+        <li><div><b>What it finds.</b> On a set of 120 made-up screens it found 91 % of such items and put no box on a wrong place. It does not find names or addresses, so look at the picture before it goes out.</div></li>
+        <li><div><b>Pixelate, blur, invert.</b> Keys B, U and I cover an area you drag over. They are drawings like the others, so they can be moved, changed and undone.</div></li>
+        <li><div><b>Lasso.</b> Key J cuts the picture to a free shape. Outside it the picture is transparent (a JPG gets a white background), and several lassos add up.</div></li>
+        <li><div><b>Also in the step recorder.</b> The option Cover personal data runs the same search on every step, pixelates what it finds and leaves it out of the caption. A step that could not be checked is not saved.</div></li>
+        </ul>
+      </div>
+      <div class="art rv"><div class="stack"><figure class="shotfig"><img src="img/en/hide.webp" alt="A table with an e-mail, a phone number, an account number and a card number covered by pixelation" loading="lazy"></figure></div></div>
+    </div>
+
+    <div class="crow" id="steps">
+      <div class="rv">
+        <h3>A document of steps from your clicks</h3>
+        <p class="lead">Ctrl+Shift+Print starts the step recorder and you do the procedure as usual. Every mouse click becomes one numbered picture, and when you stop, the pictures are a document.</p>
+        <ul class="can">
+        <li><div><b>One click, one step.</b> At the moment of the press Shot captures the monitor under the pointer, or the window under it, and draws a red circle with the number of the step where you clicked. A click on Shot's own icon or menu and a click in the open overlay are not steps.</div></li>
+        <li><div><b>Steps with no click.</b> Shift+Alt+Print adds a step by hand, for something done with the keyboard.</div></li>
+        <li><div><b>The result.</b> The same shortcut ends the recording. In the folder <code>steps-&lt;date&gt;</code> in your save folder are <code>01.png</code>, <code>02.png</code> and so on, <code>steps.md</code> and one <code>steps.html</code> with the pictures inside, so it can be sent as a single file.</div></li>
+        <li><div><b>Captions you can rewrite.</b> Every step has a caption such as &quot;Click in Firefox - Settings&quot;, taken from the application and the window title, and you can change it.</div></li>
+        <li><div><b>From a script.</b> <code>shot-cli steps start</code>, <code>stop</code> and <code>add</code> do the same, and recording a region and recording steps exclude each other.</div></li>
+        </ul>
+      </div>
+      <div class="art rv"><div class="stack"><figure class="shotfig"><img src="img/en/record_steps.webp" alt="A step of the step recorder with a red circle and the number of the step" loading="lazy"></figure></div></div>
+    </div>
+
+    <div class="crow flip" id="reopen">
+      <div class="rv">
+        <h3>A capture you can come back to</h3>
+        <p class="lead">A capture is not only a picture. Shot keeps the drawings apart from the picture, so you can open it later and change what you drew.</p>
+        <ul class="can">
+        <li><div><b>A card after every capture.</b> After copying or saving, a card with a thumbnail stays in the lower right corner for 6 seconds. Edit opens the picture again in Shot with its drawings.</div></li>
+        <li><div><b>A project, not only a PNG.</b> Every capture is also kept as a <code>.shot</code> project, the picture without the drawings and the drawings relative to the region. After opening it, arrows, boxes and texts can be picked and changed again, not painted over.</div></li>
+        <li><div><b>History.</b> The newest captures are listed in the panel menu, and how many are kept is a setting.</div></li>
+        <li><div><b>Several regions in one capture.</b> Ctrl+drag adds another region, and the result keeps every one in its place and leaves the space between them transparent. A lasso cuts a free shape.</div></li>
+        </ul>
+      </div>
+      <div class="art rv"><div class="stack"><figure class="shotfig"><img src="img/en/deliver_card.webp" alt="The card with a thumbnail in the corner of the monitor after a capture" loading="lazy"></figure></div></div>
+    </div>
+    <p class="lead rv" style="max-width:52em;margin:34px auto 0;font-size:16px;text-align:center">In October 2026 the author went through the functions of 14 screenshot tools, among them ShareX, Snagit, CleanShot X, Shottr, Flameshot, Ksnip and Spectacle. Several parts above, such as scrolling capture, fixed region sizes and reopening a capture with its drawings, are known from commercial tools. Shot has them at no price and for Linux.</p>
+  </div>
+</section>
+
+<!-- HIGHLIGHTS -->
+<section class="chap full" id="highlights">
+  <div class="wrap">
+    <div class="centerhead rv">
+      <h2>What Shot does</h2>
+      <p class="lead">Eight things, each with its own chapter below.</p>
+    </div>
+    <div class="hl-grid">
+      <a class="hl rv" href="#capture"><h3>Choose what to capture</h3><p>A region over several monitors, a window, a whole monitor or several regions at once.</p></a>
+      <a class="hl rv" href="#draw"><h3>Draw on it</h3><p>Arrows, boxes, numbers, text, stamps, a magnified detail and more, with undo for every step.</p></a>
+      <a class="hl rv" href="#redact"><h3>Hide what must not be seen</h3><p>Pixelate, blur or let Shot find e-mails, accounts and card numbers for you.</p></a>
+      <a class="hl rv" href="#effects"><h3>Finish the picture</h3><p>Shadow, border, rounded corners, a torn-paper edge, rotation and a background.</p></a>
+      <a class="hl rv" href="#deliver"><h3>Send it on</h3><p>Copy, save, pin to the screen, open in an editor, read the text or upload.</p></a>
+      <a class="hl rv" href="#scroll"><h3>Capture what does not fit</h3><p>Shot scrolls the content itself and joins the pictures, down or sideways.</p></a>
+      <a class="hl rv" href="#record"><h3>Record</h3><p>A region as a short WebP or GIF, or every click as a numbered step in a document.</p></a>
+      <a class="hl rv" href="#settings"><h3>Set it your way</h3><p>Folder, file name, quality, destinations, shortcuts and the look of the panels.</p></a>
+    </div>
+  </div>
+</section>
+
+<section class="chap" id="capture">
+  <div class="wrap">
+    <div class="rv">
+      <p class="num">01</p>
+      <h2>Choose what to capture</h2>
+      <p class="lead">Shot freezes every monitor at once. Drag over the frozen screen, the region may cross monitors, and a magnifier shows the pixel under the pointer with its coordinates.</p>
+      <ul class="can">
+        <li><div><b>Region, window or monitor.</b> Drag for a region, click outside it for the window under the pointer, Shift+click for the whole monitor. A window taken by a click is captured alone, with transparent rounded corners.</div></li>
+        <li><div><b>Several regions.</b> Ctrl+drag adds another region to the same capture. The result keeps every region in its place and leaves the space between them transparent.</div></li>
+        <li><div><b>An exact size.</b> Ctrl+R takes a size such as 1280x720, a saved preset or a locked aspect ratio. The arrow keys move the region by one pixel.</div></li>
+        <li><div><b>Edges snap</b> to the edges of windows and monitors. Alt turns the snapping off. Ctrl+wheel zooms the frozen screen up to 8x for precise work.</div></li>
+        <li><div><b>Alt+drag inside the region</b> lifts what is in it and drops it where you let go, for example in the middle of a monitor where there is room around it for the toolbars and the drawing.</div></li>
+        <li><div><b>Delay and repeat.</b> Ctrl+D captures after a countdown, so a menu can be opened first. Ctrl+L remembers the region for repeated screenshots of one place.</div></li>
+      </ul>
+    </div>
+    <div class="art rv"><div class="stack"><figure class="shotfig"><img src="img/en/capture.webp" alt="A region chosen over an application window, with the size shown above it and the toolbars around it" loading="lazy"></figure></div></div>
+  </div>
+</section>
+
+<section class="chap band full" id="draw">
+  <div class="wrap">
+    <div class="centerhead rv">
+      <p class="num">02</p>
+      <h2>Draw on the frozen screen</h2>
+      <p class="lead">The tools sit in a bar below the region and every one has a key, mostly the ones Flameshot uses. Every drawing is an undo step, and a drawing can be picked and changed later.</p>
+    </div>
+    <div class="tools">
+      <div class="tool rv"><b>Pencil</b><span>Free line. Key P.</span></div>
+      <div class="tool rv"><b>Line</b><span>Straight, with Shift in steps of 15 degrees. Key D.</span></div>
+      <div class="tool rv"><b>Arrow</b><span>Press A again to change the heads. Key A.</span></div>
+      <div class="tool rv"><b>Rectangle</b><span>Outline S, filled R. With Shift a square.</span></div>
+      <div class="tool rv"><b>Circle</b><span>Key C. With Ctrl from the centre.</span></div>
+      <div class="tool rv"><b>Marker</b><span>A translucent stroke. Key M.</span></div>
+      <div class="tool rv"><b>Number</b><span>Numbered points for a list of steps. N again sets the start.</span></div>
+      <div class="tool rv"><b>Text</b><span>Bold Ctrl+B, italic Ctrl+I, alignment and a background. Key T.</span></div>
+      <div class="tool rv"><b>Speech bubble</b><span>Text in a bubble that points at something. Key O.</span></div>
+      <div class="tool rv"><b>Stamps and emoji</b><span>OK, error, warning, information, question, star. Key E.</span></div>
+      <div class="tool rv"><b>Context stamp</b><span>The time, the application and the window title as text. Key W.</span></div>
+      <div class="tool rv"><b>Magnified detail</b><span>Drag over a small detail and place its enlargement. Key Z.</span></div>
+      <div class="tool rv"><b>Highlight</b><span>Dim the surroundings, grey them, magnify inside or tint the area. Key H.</span></div>
+      <div class="tool rv"><b>Cursor</b><span>Draws a mouse pointer, to show where to click. Key K.</span></div>
+      <div class="tool rv"><b>Measure</b><span>The distance between two points in pixels. Key L.</span></div>
+      <div class="tool rv"><b>Colour from the screen</b><span>HEX, RGB and the WCAG contrast against the previous colour. Key G.</span></div>
+      <div class="tool rv"><b>Cut out a strip</b><span>Removes a horizontal or vertical strip and joins the rest, to shorten a long window. Ctrl+Z brings it back. Key X.</span></div>
+    </div>
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:44px;align-items:center;margin-top:44px" class="two">
+      <p class="lead" style="font-size:17px">Click a drawing to pick it, Shift+click adds more. A picked line or arrow shows dots on its points, and dragging a plus in the middle of a segment adds a point. Snapping to other drawings and to the region can be switched off with Alt.</p>
+      <div><figure class="shotfig"><img src="img/en/draw.webp" alt="A region with an arrow, a rectangle, numbered points and a text drawn on it" loading="lazy"></figure></div>
+    </div>
+  </div>
+</section>
+
+<section class="chap flip" id="effects">
+  <div class="wrap">
+    <div class="rv">
+      <p class="num">03</p>
+      <h2>Finish the picture</h2>
+      <p class="lead">Ctrl+F opens the effects of the whole image with a live preview. They are part of the picture that leaves, and they can stay on for the next captures.</p>
+      <ul class="can">
+        <li><div><b>Shadow and border.</b> A soft shadow under the picture and a frame in a colour and a width of your choice.</div></li>
+        <li><div><b>Torn paper.</b> The picture looks torn out of a sheet, with randomly torn edges and the shadow running along the tear.</div></li>
+        <li><div><b>Shape.</b> Rounded corners, trimming the edge, rotation (Ctrl+comma and Ctrl+period turn it by a quarter) and a scale of the output.</div></li>
+        <li><div><b>Background.</b> A margin around the picture in a colour or a gradient, and a grayscale version.</div></li>
+      </ul>
+    </div>
+    <div class="art rv"><div class="stack"><figure class="shotfig"><img src="img/en/effects.webp" alt="The effects panel and a picture with a shadow, a rounded corner and a margin" loading="lazy"></figure></div></div>
+  </div>
+</section>
+
+<section class="chap band" id="deliver">
+  <div class="wrap">
+    <div class="rv">
+      <p class="num">04</p>
+      <h2>Send it on</h2>
+      <p class="lead">Enter copies, and what else happens is a key or a click away. Tab opens a list of destinations.</p>
+      <ul class="can">
+        <li><div><b>Copy and save.</b> Enter, Ctrl+C or a double-click copies, Ctrl+S saves and Ctrl+Shift+S saves as. The clipboard always gets a PNG. The file name pattern and the folder are in the settings.</div></li>
+        <li><div><b>Send to.</b> Tab offers copy, save, save as, pin, an image editor, reading the text (tesseract) and Imgur with your own Client-ID.</div></li>
+        <li><div><b>Pinned pictures.</b> Ctrl+P pins the picture on top of the screen. Drag moves it, the wheel zooms it, Ctrl+wheel changes the transparency, and the right button opens a menu that includes clicking through it.</div></li>
+      </ul>
+    </div>
+    <div class="art rv"><div class="stack"><figure class="shotfig"><img src="img/en/deliver_send.webp" alt="The list of destinations opened with Tab over a captured region" loading="lazy"></figure></div></div>
+  </div>
+</section>
+
+<section class="chap" id="record">
+  <div class="wrap" style="display:block;max-width:860px">
+    <div class="rv">
+      <p class="num">05</p>
+      <h2>Record</h2>
+      <p class="lead">Two ways to show a procedure: a short recording of a region, or a document made of the clicks you make.</p>
+      <ul class="can">
+        <li><div><b>Record the region.</b> Ctrl+Shift+V or the Record button closes the overlay and records the live screen in the region. A thin red frame sits just outside the region, so it is not in the recording, and every click shows a red ripple.</div></li>
+        <li><div><b>WebP or GIF.</b> ffmpeg converts the recording, WebP is the default and much smaller than GIF, 15 frames a second. It stops with the panel menu, Shot's own key or after the time limit (60 seconds at first).</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="chap flip band" id="monitors">
+  <div class="wrap">
+    <div class="rv">
+      <p class="num">06</p>
+      <h2>Several monitors</h2>
+      <p class="lead">The overlay treats all your monitors as one screen.</p>
+      <ul class="can">
+        <li><div><b>One frozen screen.</b> All monitors freeze together, a region can cross a border, and Ctrl+A takes the whole desktop. A setting can start every capture by picking a monitor first.</div></li>
+        <li><div><b>The bars stay beside the region.</b> Drawing tools below it, special tools on its left, output on its right, whole, also over the border of two monitors. A bar never covers the region unless there is no room anywhere.</div></li>
+        <li><div><b>Where there is no room</b> on a side, the left bar goes to the right of the region, the right bar to the left of it and the drawing tools above it, and only then along the edge of the monitor inside the region. No bar disappears.</div></li>
+        <li><div><b>Room around a small region.</b> Alt+drag inside the region lifts it and puts it where there is space.</div></li>
+      </ul>
+    </div>
+    <div class="art rv"><div class="stack"><figure class="shotfig"><img src="img/en/monitors.webp" alt="The toolbars beside a narrow region at the edge of a monitor" loading="lazy"></figure></div></div>
+  </div>
+</section>
+
+<section class="chap" id="settings">
+  <div class="wrap" style="display:block">
+    <div class="centerhead rv">
+      <p class="num">07</p>
+      <h2>Settings</h2>
+      <p class="lead">The settings window opens from the panel menu or from the overlay. Most of it is on one page, General, then Keys and About.</p>
+    </div>
+    <div class="rv" style="max-width:860px;margin:0 auto 40px"><figure class="shotfig"><img src="img/en/settings.webp" alt="The Shot settings window, the General page" loading="lazy"></figure></div>
+    <div class="sgrid">
+      <div class="sgroup rv">
+        <h3>Saving</h3>
+        <ul class="opts">
+          <li><b>Folder and file name</b><span>The folder for Save, and a pattern with the date, the time, a counter and a random part.</span></li>
+          <li><b>JPG quality</b><span>The clipboard stays PNG whatever the file format is.</span></li>
+          <li><b>After saving or copying</b><span>Nothing, a thumbnail, or the card with actions, and how long it stays.</span></li>
+        </ul>
+      </div>
+      <div class="sgroup rv">
+        <h3>Screen</h3>
+        <ul class="opts">
+          <li><b>Dimming outside the region</b><span>How dark the frozen screen is around the region.</span></li>
+          <li><b>Remember the last region, pick a monitor first</b><span>Two ways to start the next capture faster.</span></li>
+          <li><b>Magnifier, size label, short names under icons</b><span>What the overlay shows while you choose.</span></li>
+          <li><b>History and the pointer</b><span>How many captures are kept and whether the real pointer is in the capture.</span></li>
+        </ul>
+      </div>
+      <div class="sgroup rv">
+        <h3>Drawing</h3>
+        <ul class="opts">
+          <li><b>Colour and width</b><span>Follow the last use, or stay as they are.</span></li>
+          <li><b>Arrow heads, counter start, fill opacity</b><span>The starting values of the tools.</span></li>
+          <li><b>Snapping of drawings</b><span>To each other and to the region, Alt turns it off while dragging.</span></li>
+          <li><b>Text and the context stamp</b><span>Alignment, a background behind new texts and the format of the stamp.</span></li>
+        </ul>
+      </div>
+      <div class="sgroup rv">
+        <h3>Recording and steps</h3>
+        <ul class="opts">
+          <li><b>Format and speed</b><span>WebP or GIF, the frames a second and the time limit.</span></li>
+          <li><b>Pointer and ripples</b><span>Whether the recording has the mouse pointer and a ripple at every click.</span></li>
+          <li><b>Step recorder</b><span>A step captures the monitor or the window under the pointer, and the option to cover personal data.</span></li>
+        </ul>
+      </div>
+      <div class="sgroup rv">
+        <h3>Scrolling capture and effects</h3>
+        <ul class="opts">
+          <li><b>Where a scrolling capture starts</b><span>Ask, always from here or always from the beginning, and the longest picture.</span></li>
+          <li><b>Whole-image effects</b><span>Shadow, border, grayscale, torn paper, scale, rounded corners and the background, kept for the next captures.</span></li>
+        </ul>
+      </div>
+      <div class="sgroup rv">
+        <h3>Destinations</h3>
+        <ul class="opts">
+          <li><b>What Enter does</b><span>Ask with the list of destinations, or copy or save at once.</span></li>
+          <li><b>Text recognition languages</b><span>The tesseract codes joined by a plus, for example eng+ces.</span></li>
+          <li><b>Imgur and the editor</b><span>Your own Imgur Client-ID and the program for Open in an editor.</span></li>
+        </ul>
+      </div>
+      <div class="sgroup rv">
+        <h3>Keys</h3>
+        <ul class="opts">
+          <li><b>Shortcuts</b><span>Print starts a capture and Alt+Print takes the active window. Both are changed here, and every key of the overlay has its place on the page Keys.</span></li>
+          <li><b>Backup</b><span>All settings and shortcuts go to a JSON file and come back from one. The Imgur Client-ID stays out of it.</span></li>
+        </ul>
+      </div>
+      <div class="sgroup rv">
+        <h3>About</h3>
+        <ul class="opts">
+          <li><b>Version and what is new</b><span>The version, the changes in it and a check for a newer one.</span></li>
+          <li><b>Updates</b><span>Once a day Shot asks GitHub for the newest release and nothing else is sent. The check can be switched off, and an update is downloaded, verified against the signature and installed from the same page.</span></li>
+          <li><b>Tour</b><span>A guide that asks you to try the main functions on your own screen.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="chap band full" id="keys">
+  <div class="wrap">
+    <div class="centerhead rv">
+      <p class="num">08</p>
+      <h2>Keys on one page</h2>
+      <p class="lead">F1 opens the same help inside Shot, with a search that works without diacritics.</p>
+    </div>
+    <div class="keywrap rv">
+      <table class="keytable">
+        <thead><tr><th>Key</th><th>What it does</th></tr></thead>
+        <tbody>
+        <tr><td><kbd>Print</kbd></td><td>Starts a capture. Alt+Print takes the active window.</td></tr>
+        <tr><td><kbd>drag</kbd></td><td>Chooses a region. Click outside it takes a window, Shift+click a monitor.</td></tr>
+        <tr><td><kbd>Ctrl+drag</kbd></td><td>Adds another region to the same capture.</td></tr>
+        <tr><td><kbd>Alt+drag</kbd></td><td>Lifts what is in the region and drops it where you let go.</td></tr>
+        <tr><td><kbd>Ctrl+R</kbd></td><td>Region size and aspect ratio.</td></tr>
+        <tr><td><kbd>Ctrl+A</kbd></td><td>The whole desktop. Ctrl+Backspace drops the region.</td></tr>
+        <tr><td><kbd>P D A S R C M</kbd></td><td>Pencil, line, arrow, rectangle, filled rectangle, circle, marker.</td></tr>
+        <tr><td><kbd>N K T O E W</kbd></td><td>Number, cursor, text, bubble, stamp, context stamp.</td></tr>
+        <tr><td><kbd>B U I H</kbd></td><td>Pixelate, blur, invert, highlight.</td></tr>
+        <tr><td><kbd>X L J Z G F</kbd></td><td>Cut out a strip, measure, lasso, magnified detail, colour from the screen, fill and shadow.</td></tr>
+        <tr><td><kbd>Ctrl+M</kbd></td><td>Select and move drawings.</td></tr>
+        <tr><td><kbd>Ctrl+Z</kbd></td><td>Undo. Ctrl+Shift+Z redoes and Backspace deletes the last drawing.</td></tr>
+        <tr><td><kbd>Ctrl+Shift+R</kbd></td><td>Finds personal data and pixelates it.</td></tr>
+        <tr><td><kbd>Ctrl+F</kbd></td><td>Effects of the whole image.</td></tr>
+        <tr><td><kbd>Enter</kbd></td><td>Copies, or does what the settings say. Ctrl+C copies, Ctrl+S saves.</td></tr>
+        <tr><td><kbd>Tab</kbd></td><td>The list of destinations.</td></tr>
+        <tr><td><kbd>Ctrl+P</kbd></td><td>Pins the picture on the screen. Ctrl+E opens it in an editor.</td></tr>
+        <tr><td><kbd>Ctrl+D</kbd></td><td>Delayed capture. Ctrl+L remembers the region.</td></tr>
+        <tr><td><kbd>Ctrl+Shift+V</kbd></td><td>Records the region.</td></tr>
+        <tr><td><kbd>Ctrl+Shift+Print</kbd></td><td>Starts and stops the step recorder. Shift+Alt+Print adds a step.</td></tr>
+        <tr><td><kbd>F1</kbd></td><td>Help for every function.</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>The first press shows that the next one closes, the second closes.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="chap" id="install">
+  <div class="wrap" style="display:block;max-width:860px">
+    <div class="rv">
+      <p class="num">09</p>
+      <h2>Install</h2>
+      <p class="lead">Shot is an extension of GNOME Shell and of Cinnamon, it does not run on other desktops.</p>
+      <ul class="can"><li><div><b>Supported.</b> GNOME Shell 45 to 50 on Wayland and on X11, and Cinnamon 6 on X11, for example Linux Mint 21.3 and 22.3. GNOME 42 to 44 and older Cinnamon are refused by the installer.</div></li></ul>
+      <ol class="steps">
+        <li><div>Download <code>shot-&lt;version&gt;-linux.sh</code> and its signature <code>.sig</code> from the newest release on the Releases page of <code>mdiskuze/shot</code> on GitHub.</div></li>
+        <li><div>Run it with <code>sh shot-&lt;version&gt;-linux.sh</code>. On Ubuntu, Debian and Mint it installs the missing optional programs with apt, such as ffmpeg, tesseract and zenity, and loads Shot into the running Shell.</div></li>
+        <li><div>Press Print. The tour in the panel menu takes you through the main functions on your own screen.</div></li>
+      </ol>
+      <p class="lead" style="margin-top:22px;font-size:16px">Later versions are installed from the About page of the settings. The download is checked against the signature before it runs.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Shot is a private project. The releases and the reports of problems are in the public repository <a href="https://github.com/mdiskuze/shot">mdiskuze/shot</a>.</p>
+    <p>The screenshots on this page were taken by Shot on a test desktop with made-up data.</p>
+  </div>
+</footer>
+
+<script>
+document.documentElement.classList.add('js');
+(function(){
+  var links={};document.querySelectorAll('.chapters a').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.12});
+    document.querySelectorAll('.rv').forEach(function(n){io.observe(n)});
+    var so=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting){Object.keys(links).forEach(function(k){links[k].classList.toggle('on',k===e.target.id)});
+        var a=links[e.target.id]; if(a&&a.scrollIntoView){var nav=a.parentNode.parentNode; nav.scrollTo({left:a.offsetLeft-24,behavior:'smooth'})}}
+    })},{rootMargin:'-40% 0px -55% 0px'});
+    document.querySelectorAll('section.chap').forEach(function(s){so.observe(s)});
+  }else{document.querySelectorAll('.rv').forEach(function(n){n.classList.add('in')})}
+})();
+</script>
+</body>
+</html>
